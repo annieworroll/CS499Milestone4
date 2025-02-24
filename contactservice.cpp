@@ -3,17 +3,31 @@
 #include <exception>
 #include <stdexcept>
 
-ContactService::ContactService()
+ContactService::ContactService(ContactDatabase *database)
 {
   //Set to -1 so that get_next_entry can be simpler for the
   //case of the first entry
   current_record = -1;
+  db = database;
+  db->get_records(this);
 }
 
 void ContactService::add_entry(string f_name, string l_name,
-			       string phone_number, string address)
+			       string phone_number, string address,
+			       string city, string state,
+			       string zip)
 {
-  Contact new_contact(f_name, l_name, phone_number, address, "", "", "");
+  Contact new_contact(f_name, l_name, phone_number, address, city, state, zip);
+  contact_list.push_back(new_contact);
+  db->insert_record(new_contact);
+}
+
+void ContactService::add_memory_only(string f_name, string l_name,
+			       string phone_number, string address,
+			       string city, string state,
+				     string zip)
+{
+  Contact new_contact(f_name, l_name, phone_number, address, city, state, zip);
   contact_list.push_back(new_contact);
 }
 
@@ -30,17 +44,17 @@ Contact ContactService::get_current_entry()
 
 Contact ContactService::get_next_entry()
 {
-  current_record++;;
   Contact entry_to_return;
 
   try{
+    current_record++;
     entry_to_return = contact_list.at(current_record);
   }catch(std::out_of_range& ex){
     //We've run out of entries at this point, wrap to start
     current_record = 0;
     entry_to_return = contact_list[current_record];
   }
-
+  
   return entry_to_return;
 }
 
@@ -48,10 +62,12 @@ Contact ContactService::get_next_entry()
 //a default record if none left
 Contact ContactService::remove_entry(){
   Contact entry_to_return;
-
+ 
   std::vector<Contact>::iterator to_erase = contact_list.begin() + current_record;
   try{
+    db->remove_record(contact_list.at(current_record));
     contact_list.erase(to_erase);
+    
     current_record--;
     //If there are records remaining
     if(current_record != -1){

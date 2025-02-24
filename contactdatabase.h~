@@ -1,0 +1,8 @@
+#include "contact.h"
+#include "contactservice.h"
+#include "sqlite3.h"
+
+class ContactDatabase{
+
+  
+};

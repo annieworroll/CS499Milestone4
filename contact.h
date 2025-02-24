@@ -1,12 +1,15 @@
+#ifndef CONTACT
+#define CONTACT
+
 /* class to hold a contact record */
 #include <string>
 using std::string;
 class Contact{
 
  private:
-  string firstName;
-  string lastName;
-  string phoneNumber;
+  string first_name;
+  string last_name;
+  string phone_number;
   string address;
   string city;
   string state;
@@ -32,4 +35,7 @@ class Contact{
   string get_city();
   string get_state();
   string get_zip_code();
+  string to_string();
 };
+
+#endif

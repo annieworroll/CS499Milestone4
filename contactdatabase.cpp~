@@ -1,0 +1,17 @@
+#include "contactdatabase.h"
+
+ContactDatabase::ContactDatabase(ContactService c){
+  sqlite3_open("contacts.db", db);
+  contacts = c;
+}
+
+void ContactDatabase::get_records(){
+  //SQL statement
+  char * sql = "SELECT * FROM contacts;";
+  sqlite3_exec(db, sql, callback, (void*)data, &error); 
+}
+
+static int ContactDatabase::callback(void* data, int argc, char **argv,
+				     char** error){
+  contacts.add_record(argv[0], argv[1], argv[2]
+}

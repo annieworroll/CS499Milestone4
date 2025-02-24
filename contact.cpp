@@ -26,15 +26,15 @@ Contact::Contact(string fName, string lName, string pNumber,
 }
 
 void Contact::set_first_name(string fName){
-  firstName = fName;
+  first_name = fName;
 }
 
 void Contact::set_last_name(string lName){
-  lastName = lName;
+  last_name = lName;
 }
 
 void Contact::set_phone_number(string pNumber){
-  phoneNumber = pNumber;
+  phone_number = pNumber;
 }
 
 void Contact::set_address(string add){
@@ -54,15 +54,15 @@ void Contact::set_zip_code(string zip){
 }
 
 string Contact::get_first_name(){
-  return firstName;
+  return first_name;
 }
 
 string Contact::get_last_name(){
-  return lastName;
+  return last_name;
 }
 
 string Contact::get_phone_number(){
-  return phoneNumber;
+  return phone_number;
 }
 
 string Contact::get_address(){
@@ -79,4 +79,9 @@ string Contact::get_state(){
 
 string Contact::get_zip_code(){
   return zip_code;
+}
+
+string Contact::to_string(){
+  return last_name + ',' + first_name + ',' + phone_number + ',' + address + ',' +
+    city + ',' + state + ',' + zip_code;
 }
